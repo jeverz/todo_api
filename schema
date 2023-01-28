@@ -1,0 +1,24 @@
+DROP TABLE user;
+DROP TABLE todo;
+CREATE TABLE user (
+    id INTEGER PRIMARY KEY, 
+    username TEXT NOT NULL, 
+    password TEXT NOT NULL, 
+    is_admin INTEGER NOT NULL,
+    fullname TEXTs
+);
+CREATE TABLE todo (
+    id INTEGER PRIMARY KEY, 
+    user_id INTEGER NOT NULL, 
+    title TEXT NOT NULL,
+    description TEXT,
+    completed TIME
+);
+INSERT INTO user (username, password, is_admin, fullname) VALUES ('billy', 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad', 0, 'Billy Bob');
+INSERT INTO user (username, password, is_admin, fullname) VALUES ('sally', 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad', 0, 'Sally Anne');
+INSERT INTO user (username, password, is_admin, fullname) VALUES ('admin', 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad', 1, 'Administrator');
+INSERT INTO todo (user_id, title, description) VALUES (1, "Go dancing", "Hit the dance floor with Sally Anne");
+INSERT INTO todo (user_id, title, description, completed) VALUES (1, "Mow the lawn", "Grass is too long", "2023-01-10");
+INSERT INTO todo (user_id, title, description) VALUES (2, "Go jogging", "Gotta get fit for the dance");
+INSERT INTO todo (user_id, title) VALUES (2, "Make Pizza");
+-- password is sha256 encode of 'abc'

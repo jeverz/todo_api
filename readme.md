@@ -4,7 +4,7 @@
 This is a Todo API I created in order to learn Go. It has one import for Sqlite3. It implements the following.
 
 * Fully Go API
-* REST API
+* CRUD
 * Session Management
 * Authentication
 * Simple HMAC JWT

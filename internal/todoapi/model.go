@@ -6,10 +6,10 @@ type LoginRequest struct {
 }
 
 type UserResponse struct {
-	Id int64 `json:"id"`
+	Id       int64  `json:"id"`
 	UserName string `json:"username"`
 	FullName string `json:"fullname"`
-	IsAdmin bool `json:"isadmin"`
+	IsAdmin  bool   `json:"isadmin"`
 }
 
 type RegisterRequest struct {

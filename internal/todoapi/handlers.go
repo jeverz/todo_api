@@ -115,7 +115,7 @@ func routeAuth(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "internal server error")
 		return
 	}
-	jstr, err := json.Marshal(UserResponse{user.Id, user.UserName, user.FullName, user.IsAdmin })
+	jstr, err := json.Marshal(UserResponse{user.Id, user.UserName, user.FullName, user.IsAdmin})
 	if err != nil {
 		log.Print(err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -249,7 +249,7 @@ func routeUser(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("internal server error"))
 		return
 	}
-	jstr, err := json.Marshal(UserResponse{user.Id, user.UserName, user.FullName, user.IsAdmin })
+	jstr, err := json.Marshal(UserResponse{user.Id, user.UserName, user.FullName, user.IsAdmin})
 	if err != nil {
 		log.Print(err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -258,4 +258,3 @@ func routeUser(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Fprint(w, string(jstr))
 }
-

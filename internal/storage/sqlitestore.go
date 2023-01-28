@@ -9,7 +9,7 @@ import (
 )
 
 type SqliteDB struct {
-	DB *sql.DB
+	DB   *sql.DB
 	prep map[string]*sql.Stmt
 }
 
@@ -55,11 +55,11 @@ func (db SqliteDB) GetUserById(id int64) (*User, error) {
 	row := db.prep["GetUserById"].QueryRow(id)
 	var u User
 	var isAdmin int64
-	if err := row.Scan(&u.Id, &u.UserName, &u.Password, &isAdmin, &u.FullName,); err != nil {
+	if err := row.Scan(&u.Id, &u.UserName, &u.Password, &isAdmin, &u.FullName); err != nil {
 		return nil, err
 	}
 	u.IsAdmin = isAdmin != 0
-	return &u, nil	
+	return &u, nil
 }
 
 func (db SqliteDB) ListItems(userId int64) ([]Todo, error) {
@@ -103,14 +103,14 @@ func SqliteOpen(cs string) (TodoDatabase, error) {
 	statements := []struct {
 		k string
 		v string
-	} {
-		{ "AddItem", "INSERT INTO todo (user_id, title, description, completed) VALUES (?,?,?,?) RETURNING id, title, description, completed" },
-		{ "AddUser", "INSERT INTO user (username,fullname,password,is_admin) VALUES (?,?,?,?)" },
-		{ "DeleteItem", "DELETE FROM todo WHERE user_id=? AND id=?" },
-		{ "GetUser", "SELECT id, username, password, is_admin, fullname FROM user WHERE username=?" },
-		{ "GetUserById", "SELECT id, username, password, is_admin, fullname FROM user WHERE id=?" },
-		{ "ListItems", "SELECT id, title, description, completed FROM todo WHERE user_id=?" },
-		{ "UpdateItem", "UPDATE todo SET title=?, description=?, completed=? WHERE id=? AND user_id=?" },
+	}{
+		{"AddItem", "INSERT INTO todo (user_id, title, description, completed) VALUES (?,?,?,?) RETURNING id, title, description, completed"},
+		{"AddUser", "INSERT INTO user (username,fullname,password,is_admin) VALUES (?,?,?,?)"},
+		{"DeleteItem", "DELETE FROM todo WHERE user_id=? AND id=?"},
+		{"GetUser", "SELECT id, username, password, is_admin, fullname FROM user WHERE username=?"},
+		{"GetUserById", "SELECT id, username, password, is_admin, fullname FROM user WHERE id=?"},
+		{"ListItems", "SELECT id, title, description, completed FROM todo WHERE user_id=?"},
+		{"UpdateItem", "UPDATE todo SET title=?, description=?, completed=? WHERE id=? AND user_id=?"},
 	}
 
 	for _, stmt := range statements {

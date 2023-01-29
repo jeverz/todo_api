@@ -20,12 +20,17 @@ type Todo struct {
 }
 
 type TodoDatabase interface {
-	AddItem(userId int64, todo Todo) (*Todo, error)
-	DeleteItem(userId, itemId int64) error
 	GetDB() *sql.DB
-	GetUser(s string) (*User, error)
-	GetUserById(id int64) (*User, error)
+
+	GetTodo(userId int64, todoId int64) (Todo, error)
+	GetTodos(userId int64) ([]Todo, error)
+	AddTodo(userId int64, todo Todo) (*Todo, error)
+	UpdateTodo(userId int64, todo Todo) error
+	DeleteTodo(userId, itemId int64) error
+
+	GetUser(id int64) (*User, error)
+	FindUser(s string) (*User, error)
 	AddUser(u *User) error
-	ListItems(userId int64) ([]Todo, error)
-	UpdateItem(userId int64, todo Todo) error
+	UpdateUser(u *User) error
+	DeleteUser(id int64) error
 }

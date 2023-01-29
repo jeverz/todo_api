@@ -27,22 +27,12 @@ The server will provide a JWT in the header of an /api/auth request and occasion
 
 ## Models
 ```golang
-type LoginRequest struct {
-	UserName string `json:"username"`
-	Password string `json:"password"`
-}
-
-type UserResponse struct {
+type User struct {
 	Id       int64  `json:"id"`
 	UserName string `json:"username"`
 	FullName string `json:"fullname"`
-	IsAdmin  bool   `json:"isadmin"`
-}
-
-type RegisterRequest struct {
-	UserName string `json:"username"`
-	FullName string `json:"fullname"`
 	Password string `json:"password"`
+	IsAdmin  bool   `json:"isadmin"`
 }
 
 type Todo struct {
@@ -53,26 +43,38 @@ type Todo struct {
 }
 ```
 
-## /api/auth
-Login with **LoginRequest**. Returns status 200 and **UserResponse** if successful.
+## General
 
-## /api/add
-Add with **Todo**. **id** is ignored. Returns status 200 and the newly added **Todo** if successful.
+### GET /api/auth
+Login with json "username" and "password". Returns status 200 and **UserResponse** if successful.
 
-## /api/delete
-Delete with **Todo**. **id** is to only field required. Returns status 200 if successful.
-
-## /api/user
-Get current user details from session. Returns status 200 and **UserResponse** if successful.
-
-## /api/list
-Get list of all Todos. Returns status 200 and **[]Todo** if successful.
-
-## /api/ping
+### GET /api/ping
 Returns "pong"
 
-## /api/register
-Register new user using **RegisterRequest**. Returns status 200 and **UserResponse** if successful.
+## Todo API
 
-## /api/update
-Update a todo with **Todo**. Returns status 200 if successful.
+### GET /api/todo/[id]
+Returns status 200 and current user **[]Todo** with no params or a **Todo** when *id* is supplied.
+
+### POST /api/todo/
+Create new todo with json **Todo**. "id" is ignored. Returns 200 on success.
+
+### PUT /api/todo/
+Send json **Todo** to update a todo. Returns 200 on success.
+
+### DELETE /api/todo/*id*
+Deletes todo with *id*. Returns 200 on success.
+
+## User API
+
+### GET /api/user/[id]
+No params returns current **User** information and 200 OK. If user is admin can get **User** information by supplying *id*.
+
+### POST /api/user/
+Create a new user sending **User**. Must be admin. Returns 200 OK on success.
+
+### PUT /api/user/
+Modify a user by sending **User**. An empty or missing password will retain the password. Must be admin. Returns 200 OK on success.
+
+### DELETE /api/user/*id*
+Must be admin. Returns 200 OK on success.

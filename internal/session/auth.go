@@ -35,7 +35,7 @@ func Authenticate(fn http.HandlerFunc) http.HandlerFunc {
 		t := time.Now().Unix()
 
 		if t > sesh.RefreshTimeout {
-			u, err := todoDB.GetUserById(sesh.Id)
+			u, err := todoDB.GetUser(sesh.Id)
 			if err != nil {
 				log.Println(err)
 				w.WriteHeader(http.StatusUnauthorized)

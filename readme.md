@@ -71,7 +71,7 @@ Deletes todo with *id*. Returns 200 on success.
 No params returns current **User** information and 200 OK. If user is admin can get **User** information by supplying *id*.
 
 ### POST /api/user/
-Create a new user sending **User**. Must be admin. Returns 200 OK on success.
+Create a new user sending **User**. Must be admin. Returns **User** and 200 OK on success.
 
 ### PUT /api/user/
 Modify a user by sending **User**. An empty or missing password will retain the password. Must be admin. Returns 200 OK on success.
